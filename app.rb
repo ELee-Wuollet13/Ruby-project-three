@@ -32,8 +32,6 @@ end
 post('/projects') do
   name = params[:project_name]
   id = params[:project_id]
-  genre = params[:project_genre]
-  isbn = params[:isbn]
   new_project = Project.new({:name => name, :id => nil, :genre => genre, :isbn => isbn})
   @projects = Project.all
   # @projects.each do |project|

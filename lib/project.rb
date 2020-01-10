@@ -1,12 +1,11 @@
 class Project
-  attr_reader :id, :title
+  attr_accessor :id, :title
 
 
   def initialize(attributes)
     @id = attributes.fetch(:id)
     @title = attributes.fetch(:title)
   end
-
 
   def self.all
     returned_projects = DB.exec("SELECT * FROM projects;")
@@ -19,10 +18,9 @@ class Project
     projects
   end
 
-### THIS IS THE PROBLEM!!!
-  def addVolunteer(volunteer_id)
-      DB.exec("INSERT INTO creators (name, bio, id) VALUES (#{name} #{id}})")
-    end
+  # def addVolunteer(volunteer_id)
+  #     DB.exec("INSERT INTO creators (name, bio, id) VALUES (#{name} #{id}})")
+  #   end
 
   def save
     result = DB.exec("INSERT INTO projects (title) VALUES ('#{@title}') RETURNING id;")
@@ -53,7 +51,7 @@ class Project
 
   def volunteers
     volunteers = []
-    results = DB.exec("SELECT volunteer_id FROM creators WHERE project_id = #{@id};")
+    results = DB.exec("SELECT volunteer_id FROM projects WHERE project_id = #{@id};")
     results.each() do |result|
       volunteer_id = result.fetch("volunteer_id").to_i()
       volunteer = DB.exec("SELECT * FROM volunteers WHERE id = #{volunteer_id};").first
@@ -72,6 +70,6 @@ class Project
 
   def delete
     DB.exec("DELETE FROM projects WHERE id = #{@id};")
-    DB.exec("DELETE FROM creators WHERE project_id = #{@id};")
+    # DB.exec("DELETE FROM creators WHERE project_id = #{@id};")
   end
 end
