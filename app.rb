@@ -1,122 +1,122 @@
 require('sinatra')
 require('sinatra/reloader')
-require('./lib/book')
-require('./lib/author')
+require('./lib/project')
+require('./lib/volunteer')
 require('./lib/patron')
 require('pry')
 require('pg')
 
-DB = PG.connect({:dbname => "library"})
+DB = PG.connect({:dbname => "volunteer_tracker_test"})
 
 also_reload('lib/**/*.rb')
 
 get('/') do
-  @books = Book.all
-  erb(:books)
+  @projects = Project.all
+  erb(:projects)
 end
 
-get('/books') do
-  @books = Book.all
-  erb(:books)
+get('/projects') do
+  @projects = Project.all
+  erb(:projects)
 end
 
-get('/books/new') do
-  erb(:new_book)
+get('/projects/new') do
+  erb(:new_project)
 end
 
-get('/books/:id') do
-  @book = Book.find(params[:id].to_i())
-  erb(:book)
+get('/projects/:id') do
+  @project = Project.find(params[:id].to_i())
+  erb(:project)
 end
 
-post('/books') do
-  name = params[:book_name]
-  id = params[:book_id]
-  genre = params[:book_genre]
+post('/projects') do
+  name = params[:project_name]
+  id = params[:project_id]
+  genre = params[:project_genre]
   isbn = params[:isbn]
-  new_book = Book.new({:name => name, :id => nil, :genre => genre, :isbn => isbn})
-  @books = Book.all
-  # @books.each do |book|
-  # if new_book == book
-  # new_search = book.add_search
-  # book = Book.new(name, nil, new_search)
-  new_book.save()
-  erb(:books)
+  new_project = Project.new({:name => name, :id => nil, :genre => genre, :isbn => isbn})
+  @projects = Project.all
+  # @projects.each do |project|
+  # if new_project == project
+  # new_search = project.add_search
+  # project = Project.new(name, nil, new_search)
+  new_project.save()
+  erb(:projects)
 end
 
 
-get('/books/:id/edit') do
-  @book = Book.find(params[:id].to_i())
-  erb(:edit_book)
+get('/projects/:id/edit') do
+  @project = Project.find(params[:id].to_i())
+  erb(:edit_project)
 end
 
-patch('/books/:id') do
-  if !params[:name] && !params[:genre] && !params[:author] && !params[:isbn]
-    @book = Book.find(params[:id].to_i())
-    @book.sold()
-    @books = Book.all
-    erb(:books)
+patch('/projects/:id') do
+  if !params[:name] && !params[:genre] && !params[:volunteer] && !params[:isbn]
+    @project = Project.find(params[:id].to_i())
+    @project.sold()
+    @projects = Project.all
+    erb(:projects)
   else
-    @book = Book.find(params[:id].to_i())
-    @book.update({:name => params[:name], :genre => params[:genre], :isbn => params[:isbn]})
-    # @book = Book.add_search
-    @books = Book.all
-    erb(:book)
+    @project = Project.find(params[:id].to_i())
+    @project.update({:name => params[:name], :genre => params[:genre], :isbn => params[:isbn]})
+    # @project = Project.add_search
+    @projects = Project.all
+    erb(:project)
   end
 
 end
 
-patch('/books/:id/edit') do
-  @book = Book.find(params[:id].to_i)
-  author = Author.new({:name => params[:author_name], :bio => params[:author_bio], :id => nil})
-  author.save
-  @book.addAuthor(author.id)
-  erb(:book)
+patch('/projects/:id/edit') do
+  @project = Project.find(params[:id].to_i)
+  volunteer = Volunteer.new({:name => params[:volunteer_name], :bio => params[:volunteer_bio], :id => nil})
+  volunteer.save
+  @project.addVolunteer(volunteer.id)
+  erb(:project)
 end
 
 
 
-delete('/books/:id') do
-  @book = Book.find(params[:id].to_i())
-  @book.delete()
-  @books = Book.all
-  erb(:books)
+delete('/projects/:id') do
+  @project = Project.find(params[:id].to_i())
+  @project.delete()
+  @projects = Project.all
+  erb(:projects)
 end
 
-get('/books/search/') do
-  @book = Book.search(params[:searched])
+get('/projects/search/') do
+  @project = Project.search(params[:searched])
   erb(:search)
 end
 
-get('/authors/:author_id') do
-  @author = Author.find(params[:author_id].to_i())
-  erb(:author)
+get('/volunteers/:volunteer_id') do
+  @volunteer = Volunteer.find(params[:volunteer_id].to_i())
+  erb(:volunteer)
 end
 
-get('/authors') do
-  @authors = Author.all
-  erb(:authors)
-end
-
-
-post('/authors') do
-  @book = Book.find(params[:id].to_i())
-  author = Author.new(params[:author_name], @book.id, nil)
-  author.save()
-  erb(:book)
+get('/volunteers') do
+  @volunteers = Volunteer.all
+  erb(:volunteers)
 end
 
 
-patch('authors/:author_id') do
-  @book = Book.find(params[:id].to_i())
-  author = Author.find(params[:author_id].to_i())
-  author.update(params[:name], @book.id)
-  erb(:book)
+post('/volunteers') do
+  @project = Project.find(params[:id].to_i())
+  volunteer = Volunteer.new(params[:volunteer_name], @project.id, nil)
+  volunteer.save()
+  erb(:project)
 end
 
-delete('/books/:id/authors/:author_id') do
-  author = Author.find(params[:author_id].to_i())
-  author.delete
-  @book = Book.find(params[:id].to_i())
-  erb(:book)
+
+patch('volunteers/:volunteer_id') do
+  @project = Project.find(params[:id].to_i())
+  volunteer = Volunteer.find(params[:volunteer_id].to_i())
+  volunteer.update(params[:name], @project.id)
+  erb(:project)
+end
+
+delete('/projects/:id/volunteers/:volunteer_id') do
+  volunteer = Volunteer.find(params[:volunteer_id].to_i())
+  volunteer.delete
+  @project = Project.find(params[:id].to_i())
+  erb(:project)
 end

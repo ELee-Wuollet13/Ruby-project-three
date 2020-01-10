@@ -1,6 +1,11 @@
 require "spec_helper"
+require "rspec"
+require "project"
+require "pry"
+require "volunteer"
 
 describe Project do
+  
   describe '#title' do
     it 'returns the project title' do
       project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
