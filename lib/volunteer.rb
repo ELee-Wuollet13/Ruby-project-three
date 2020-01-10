@@ -59,9 +59,7 @@ class Volunteer
         project = DB.exec("SELECT * FROM projects WHERE id = #{project_id};")
         name = project.first().fetch("name")
         id = project.first().fetch("id")
-        genre = project.first().fetch("genre")
-        isbn = project.first().fetch("isbn")
-        projects.push(Project.new({:name => name, :id => id, :genre => genre, :isbn => isbn}))
+        projects.push(Project.new({:name => name, :id => id}))
       end
       return projects
     else
@@ -70,7 +68,7 @@ class Volunteer
   end
 
   def delete
-    DB.exec("DELETE FROM creators WHERE volunteer_id = #{@id};")
+    # DB.exec("DELETE FROM creators WHERE volunteer_id = #{@id};")
     DB.exec("DELETE FROM volunteers WHERE id = #{@id};")
   end
 end
