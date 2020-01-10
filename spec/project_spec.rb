@@ -25,7 +25,7 @@ describe Project do
     end
   end
 
-  describe '#=' do
+  describe '==' do
     it 'is the same project if two projects have the same title' do
       project1 = Project.new({:title => 'Teaching Kids to Code', :id => nil})
       project2 = Project.new({:title => 'Teaching Kids to Code', :id => nil})
