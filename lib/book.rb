@@ -23,6 +23,8 @@ class Book
     books
   end
 
+### THIS IS THE PROBLEM!!!
+
   def addAuthor(author_id)
     # double = DB.exec("SELECT * FROM creators WHERE author_id = '#{author_id.to_i}' AND book_id = '#{@id}';")
     # if double = nil
