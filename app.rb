@@ -2,7 +2,6 @@ require('sinatra')
 require('sinatra/reloader')
 require('./lib/project')
 require('./lib/volunteer')
-require('./lib/patron')
 require('pry')
 require('pg')
 
