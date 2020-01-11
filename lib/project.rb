@@ -19,8 +19,8 @@ class Project
   end
 
   def addVolunteer(volunteer_id)
-      DB.exec("INSERT INTO volunteers (name, id) VALUES (#{name} #{id}})")
-    end
+    DB.exec("INSERT INTO volunteers (name, id) VALUES (#{name} #{id}})")
+  end
 
   def save
     result = DB.exec("INSERT INTO projects (title) VALUES ('#{@title}') RETURNING id;")
@@ -28,7 +28,7 @@ class Project
   end
 
   def ==(project_to_compare)
-    title.downcase().eql?(project_to_compare.title.downcase())
+    self.id.eql?(project_to_compare.id)
   end
 
   def self.clear
