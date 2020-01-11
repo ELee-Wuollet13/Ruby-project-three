@@ -1,0 +1,21 @@
+
+<h4>Project Name: <%= @volunteer.name %></h4>
+<h4>Project Bio: <%= @volunteer.bio %></h4>
+
+
+
+<h3>Project Volunteers</h3>
+
+<% if @volunteer.projects.length >= 1 || @volunteer.projects != nil %>
+<ul>
+  <% @volunteer.projects.each do |project| %>
+
+  <li><a href="/projects/<%= project.id %>"> <%= project.name %> </a></li>
+</ul>
+<% end %>
+<% else %>
+<p>There are no projects listed for this volunteer yet.</p>
+<% end %>
+
+<p><a href="/volunteers/<%= @volunteer.id %>/edit">Edit Volunteer</a></p>
+<a href="/projects">Return to project List</a>

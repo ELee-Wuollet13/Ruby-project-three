@@ -1,0 +1,36 @@
+
+    <h1>Update <%= @project.name()%></h1>
+    <form action="/projects/<%= @project.id %>" method="post">
+      <input type="hidden" name="_method" value="patch">
+
+      <label for="name">Rename Project</label>
+      <input type="text" name="name" id="name">
+
+      <label for="genre">Change Genre</label>
+      <input type="text" name="genre" id="genre">
+
+      <label for="isbn">Change isbn</label>
+      <input type="text" name="isbn" id="isbn">
+
+      <button type="submit">Update</button>
+    </form>
+
+    <form action="/projects/<%= @project.id %>/edit" method="post">
+      <input type="hidden" name="_method" value="patch">
+
+      <label for="volunteer_name">Volunteer Name</label>
+      <input type="text" name="volunteer_name" id="volunteer_name">
+      <label for="volunteer_bio">Volunteer Bio</label>
+      <input type="text" name="volunteer_bio" id="volunteer_bio">
+
+
+      <button type="submit">Add</button>
+    </form>
+
+    <p><a href="/projects">Return to Project List</a></p>
+
+    <form action="/projects/<%= @project.id() %>" method="post">
+      <input type="hidden" name="_method" value="delete">
+
+      <button type="submit">Delete Project</button>
+    </form>
