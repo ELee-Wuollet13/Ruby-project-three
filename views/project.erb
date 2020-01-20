@@ -1,5 +1,5 @@
 
-<h4>Project Name: <%= @volunteer.name %></h4>
+<h4>Project Name: <%= @volunteer.title %></h4>
 <h4>Project Bio: <%= @volunteer.bio %></h4>
 
 
@@ -10,7 +10,7 @@
 <ul>
   <% @volunteer.projects.each do |project| %>
 
-  <li><a href="/projects/<%= project.id %>"> <%= project.name %> </a></li>
+  <li><a href="/projects/<%= project.id %>"> <%= project.title %> </a></li>
 </ul>
 <% end %>
 <% else %>

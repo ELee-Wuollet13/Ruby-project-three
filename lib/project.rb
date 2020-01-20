@@ -1,10 +1,16 @@
 class Project
-  attr_accessor :id, :title
-
+  attr_reader :id, :title
+  attr_accessor :title
+  @@projects = {}
+  @@total_rows = 0
 
   def initialize(attributes)
-    @id = attributes.fetch(:id)
     @title = attributes.fetch(:title)
+    @id = attributes.fetch(:id)
+  end
+
+  def volunteers
+    Volunteer.find_by_project(self.id)
   end
 
   def self.all
@@ -18,17 +24,13 @@ class Project
     projects
   end
 
-  def addVolunteer(volunteer_id)
-    DB.exec("INSERT INTO volunteers (name, id) VALUES (#{name} #{id}})")
-  end
-
   def save
     result = DB.exec("INSERT INTO projects (title) VALUES ('#{@title}') RETURNING id;")
     @id = result.first().fetch("id").to_i
   end
 
   def ==(project_to_compare)
-    self.id.eql?(project_to_compare.id)
+    self.title() == project_to_compare.title()
   end
 
   def self.clear
@@ -42,34 +44,13 @@ class Project
     Project.new({:title => title, :id => id})
   end
 
-  def self.search(title)
-    project = DB.exec("SELECT * FROM projects WHERE title = '#{title}'").first
-    title = project.fetch("title")
-    id = project.fetch("id").to_i
-    Project.new({:title => title, :id => id})
-  end
-
-  def volunteers
-    volunteers = []
-    results = DB.exec("SELECT volunteer_id FROM projects WHERE id = #{@id};")
-    results.each() do |result|
-      volunteer_id = result.fetch("volunteer_id").to_i()
-      volunteer = DB.exec("SELECT * FROM volunteers WHERE id = #{volunteer_id};").first
-      name = volunteer.fetch("name")
-      volunteer_id = volunteer.fetch("volunteer_id")
-      volunteers.push(Volunteer.new({:name => (volunteer.fetch("name")), :id => volunteer_id}))
-    end
-    return volunteers
-  end
-
-
-  def update(attributes)
-    @title = attributes.fetch(:title)
+  def update(title)
+    @title = title
     DB.exec("UPDATE projects SET title = '#{@title}' WHERE id = #{@id};")
   end
 
   def delete
     DB.exec("DELETE FROM projects WHERE id = #{@id};")
-    # DB.exec("DELETE FROM creators WHERE project_id = #{@id};")
   end
+
 end

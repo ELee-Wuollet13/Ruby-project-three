@@ -2,7 +2,7 @@
     <title>Single Book</title>
   </head>
   <body>
-    <h4>Book Name: <%= @book.name %></h4>
+    <h4>Book Name: <%= @book.title %></h4>
     <h4>Book Genre: <%= @book.genre %></h4>
     <h4>Book isbn: <%= @book.isbn %></h4>
 
@@ -13,7 +13,7 @@
   <% if @book.authors.length >= 1 || @book.authors != nil %>
     <ul>
       <% @book.authors.each do |author| %>
-        <li><a href="/authors/<%= author.id %>"> <%= author.name %></a></li>
+        <li><a href="/authors/<%= author.id %>"> <%= author.title %></a></li>
     </ul>
     <% end %>
   <% else %>

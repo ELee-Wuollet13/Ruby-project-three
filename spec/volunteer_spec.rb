@@ -1,24 +1,26 @@
 require "spec_helper"
 
+DB = PG.connect({:dbname => 'volunteer_tracker_test'})
+
 describe Volunteer do
-  describe '#name' do
-    it 'returns the name of the volunteer' do
-      test_volunteer = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
-      expect(test_volunteer.name).to eq 'Jane'
+  describe '#title' do
+    it 'returns the title of the volunteer' do
+      test_volunteer = Volunteer.new({:title => 'Jane', :project_id => 1, :id => nil})
+      expect(test_volunteer.title).to eq 'Jane'
     end
   end
 
   describe '#project_id' do
     it 'returns the project_id of the volunteer' do
-      test_volunteer = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      test_volunteer = Volunteer.new({:title => 'Jane', :project_id => 1, :id => nil})
       expect(test_volunteer.project_id).to eq 1
     end
   end
 
   describe '#==' do
-    it 'checks for equality based on the name of a volunteer' do
-      volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
-      volunteer2 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+    it 'checks for equality based on the title of a volunteer' do
+      volunteer1 = Volunteer.new({:title => 'Jane', :project_id => 1, :id => nil})
+      volunteer2 = Volunteer.new({:title => 'Jane', :project_id => 1, :id => nil})
       expect(volunteer1 == volunteer2).to eq true
     end
   end
@@ -29,9 +31,9 @@ describe Volunteer do
     end
 
     it 'returns all volunteers' do
-      volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      volunteer1 = Volunteer.new({:title => 'Jane', :project_id => 1, :id => nil})
       volunteer1.save
-      volunteer2 = Volunteer.new({:name => 'Joe', :project_id => 1, :id => nil})
+      volunteer2 = Volunteer.new({:title => 'Joe', :project_id => 1, :id => nil})
       volunteer2.save
       expect(Volunteer.all).to eq [volunteer1, volunteer2]
     end
@@ -39,7 +41,7 @@ describe Volunteer do
 
   describe '#save' do
     it 'adds a volunteer to the database' do
-      volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      volunteer1 = Volunteer.new({:title => 'Jane', :project_id => 1, :id => nil})
       volunteer1.save
       expect(Volunteer.all).to eq [volunteer1]
     end
@@ -47,9 +49,9 @@ describe Volunteer do
 
   describe '.find' do
     it 'returns a volunteer by id' do
-      volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      volunteer1 = Volunteer.new({:title => 'Jane', :project_id => 1, :id => nil})
       volunteer1.save
-      volunteer2 = Volunteer.new({:name => 'Joe', :project_id => 1, :id => nil})
+      volunteer2 = Volunteer.new({:title => 'Joe', :project_id => 1, :id => nil})
       volunteer2.save
       expect(Volunteer.find(volunteer1.id)).to eq volunteer1
     end

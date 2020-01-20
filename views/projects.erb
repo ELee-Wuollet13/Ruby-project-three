@@ -3,8 +3,8 @@
 
   <% if @projects.any? %>
   <ul>
-    <% @projects.sort_by(&:name).each do |project| %>
-    <li><a href="/projects/<%= project.id %>"><%= project.name %></a></li>
+    <% @projects.sort_by(&:title).each do |project| %>
+    <li><a href="/projects/<%= project.id %>"><%= project.title %></a></li>
     <% end %>
   </ul>
   <% else %>
@@ -15,7 +15,7 @@
   <form action="/projects/search/" method="get">
     <div class="form-group">
       <label for="searched">Search</label>
-      <input id="searched" name="searched" class="form-control" type="text">
+      <input id="searched" title="searched" class="form-control" type="text">
     </div>
     <button type="submit">Go!</button>
   </form>
