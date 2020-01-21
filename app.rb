@@ -16,7 +16,7 @@ end
 
 post('/projects/:id/volunteers') do
   @project = Project.find(params[:id].to_i())
-  volunteer = Volunteer.new(params[:volunteer_name], @project.id, nil)
+  volunteer = Volunteer.new(params[:volunteer_title], @project.id, nil)
   volunteer.save()
   erb(:project)
 end
@@ -25,7 +25,7 @@ end
 patch('/projects/:id/volunteers/:volunteer_id') do
   @project = Project.find(params[:id].to_i())
   volunteer = Volunteer.find(params[:volunteer_id].to_i())
-  volunteer.update(params[:name], @project.id)
+  volunteer.update(params[:title], @project.id)
   erb(:project)
 end
 
@@ -39,12 +39,12 @@ end
 
 get('/test') do
   @something = "this is a variable"
-redirect to('/projects')
+  redirect to('/projects')
 end
 
 get('/') do
   @projects = Project.all
-redirect to('/projects')
+  redirect to('/projects')
 end
 
 get('/projects') do
@@ -62,8 +62,8 @@ get('/projects/:id') do
 end
 
 post('/projects') do
-  name = params[:project_name]
-  project = Project.new(name, nil)
+  title = params[:project_title]
+  project = Project.new(title, nil)
   project.save()
   redirect to('/projects')
 end
@@ -75,8 +75,8 @@ end
 
 patch('/projects/:id') do
   @project = Project.find(params[:id].to_i())
-  @project.update(params[:name])
-redirect to('/projects')
+  @project.update(params[:title])
+  redirect to('/projects')
 end
 
 delete('/projects/:id') do

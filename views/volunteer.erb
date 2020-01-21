@@ -1,22 +1,21 @@
 
-    <title>Single Book</title>
-  </head>
-  <body>
-    <h4>Book Name: <%= @book.title %></h4>
+<br>
+<h5>Project: <%= @volunteer.project.title %></h5>
+<p>Volunteer: <%= @volunteer.title %></p>
 
+<form action="/projects/<%= @volunteer.project.id %>/volunteers/<%= @volunteer.id %>" method="post">
+  <input title="_method" type="hidden" value="patch">
 
+  <label for="title">Retitle volunteer</label>
+  <input id="title" title="title" type="text">
 
-<h3>Book Authors</h3>
+  <button type="submit">Update volunteer</button>
+</form>
 
-  <% if @book.authors.length >= 1 || @book.authors != nil %>
-    <ul>
-      <% @book.authors.each do |author| %>
-        <li><a href="/authors/<%= author.id %>"> <%= author.title %></a></li>
-    </ul>
-    <% end %>
-  <% else %>
-    <p>There are no authors listed for this book yet.</p>
-  <% end %>
+<form action="/projects/<%= @volunteer.project.id %>/volunteers/<%= @volunteer.id %>" method="post">
+  <input title="_method" type="hidden" value="delete">
 
-    <p><a href="/books/<%= @book.id %>/edit">Edit Book</a></p>
-    <a href="/books">Return to Book List</a>
+  <button type="submit">Delete volunteer</button>
+</form>
+
+<a href="/projects/<%= @volunteer.project.id %>">Back to <%= @volunteer.project.title %></a>
