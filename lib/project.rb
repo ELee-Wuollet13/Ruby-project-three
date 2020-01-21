@@ -1,6 +1,5 @@
 class Project
-  attr_reader :id, :title
-  attr_accessor :title
+  attr_accessor :title, :id
   @@projects = {}
   @@total_rows = 0
 
