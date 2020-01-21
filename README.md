@@ -10,6 +10,8 @@ _This application is the basis for a website accessible through the console. The
 
 ## Setup/Installation Requirements
 
+## Rakefile currently does not create or dump database.
+
 * _Access the GitHub repository by copying this (https://github.com/ELee-Wuollet13/ruby-Album-app.git) link into a console command to 'git clone [link]'
 * _Use the console commands 'createdb [DATABASE NAME]', 'psql [DATABASE_NAME] < database_backup.sql', 'createdb -T [DATABASE NAME] [TEST DATABASE NAME]' to set up the database where input will be saved.
 * _navigate into the program and use the 'ruby app.rb' command to start the program_
