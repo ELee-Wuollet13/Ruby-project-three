@@ -39,7 +39,7 @@ class Volunteer
 
   def update(title, project_id)
     @title = title
-    @project_id = project_id
+    @project_id = :project_id
     DB.exec("UPDATE volunteers SET title = '#{@title}', project_id = #{@project_id} WHERE id = #{@id};")
   end
 

@@ -43,7 +43,7 @@ end
 
 get('/projects/:id/edit') do
   @project = Project.find(params[:id].to_i())
-  erb(:edit_project)
+  erb(:edit_projects)
 end
 
 patch('/projects/:id') do
@@ -54,7 +54,8 @@ end
 
 delete('/projects/:id') do
   @project = Project.find(params[:id].to_i())
-  @project.delete()
+  @project.update(:title => params[:title])
+  @projects = Project.all
   redirect to('/projects')
 end
 
@@ -64,10 +65,8 @@ get('/projects/:id/volunteers/:volunteer_id') do
 end
 
 post('/projects/:id/volunteers') do
-  title = params[:title]
-  @project_id = Project.find(params[:id].to_i())
-  @volunteer = Volunteer.new(params[:title], @project.id, nil)
-  @volunteer = Volunteer.new({:title => title, :id => @id, :project_id => @project_id})
+  @project = Project.find(params[:id].to_i())
+  @volunteer = Volunteer.new({:title => params[:title], :project_id => @project.id, :id => nil})
   @volunteer.save()
   erb(:project)
 end
