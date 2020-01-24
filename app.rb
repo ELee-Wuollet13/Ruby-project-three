@@ -9,33 +9,6 @@ DB = PG.connect({:dbname => "volunteer_tracker"})
 
 also_reload('lib/**/*.rb')
 
-get('/projects/:id/volunteers/:volunteer_id') do
-  @volunteer = Volunteer.find(params[:volunteer_id].to_i())
-  erb(:volunteer)
-end
-
-post('/projects/:id/volunteers') do
-  @project = Project.find(params[:id].to_i())
-  volunteer = Volunteer.new(params[:volunteer_title], @project.id, nil)
-  volunteer.save()
-  erb(:project)
-end
-
-
-patch('/projects/:id/volunteers/:volunteer_id') do
-  @project = Project.find(params[:id].to_i())
-  volunteer = Volunteer.find(params[:volunteer_id].to_i())
-  volunteer.update(params[:title], @project.id)
-  erb(:project)
-end
-
-
-delete('/projects/:id/volunteers/:volunteer_id') do
-  volunteer = Volunteer.find(params[:volunteer_id].to_i())
-  volunteer.delete
-  @project = Project.find(params[:id].to_i())
-  erb(:project)
-end
 
 get('/test') do
   @something = "this is a variable"
@@ -62,9 +35,9 @@ get('/projects/:id') do
 end
 
 post('/projects') do
-  title = params[:project_title]
-  project = Project.new(title, nil)
-  project.save()
+  title = params[:title]
+  @project = Project.new({:title => title, :id => @id})
+  @project.save()
   redirect to('/projects')
 end
 
@@ -83,4 +56,34 @@ delete('/projects/:id') do
   @project = Project.find(params[:id].to_i())
   @project.delete()
   redirect to('/projects')
+end
+
+get('/projects/:id/volunteers/:volunteer_id') do
+  @volunteer = Volunteer.find(params[:volunteer_id].to_i())
+  erb(:volunteer)
+end
+
+post('/projects/:id/volunteers') do
+  title = params[:title]
+  @project_id = Project.find(params[:id].to_i())
+  @volunteer = Volunteer.new(params[:title], @project.id, nil)
+  @volunteer = Volunteer.new({:title => title, :id => @id, :project_id => @project_id})
+  @volunteer.save()
+  erb(:project)
+end
+
+
+patch('/projects/:id/volunteers/:volunteer_id') do
+  @project = Project.find(params[:id].to_i())
+  volunteer = Volunteer.find(params[:volunteer_id].to_i())
+  volunteer.update(params[:title], @project.id)
+  erb(:project)
+end
+
+
+delete('/projects/:id/volunteers/:volunteer_id') do
+  volunteer = Volunteer.find(params[:volunteer_id].to_i())
+  volunteer.delete
+  @project = Project.find(params[:id].to_i())
+  erb(:project)
 end
