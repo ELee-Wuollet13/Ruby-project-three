@@ -3,7 +3,7 @@ require "spec_helper"
 describe Volunteer do
   describe '#title' do
     it 'returns the title of the volunteer' do
-      test_volunteer = Volunteers.new({:title => 'Jane', :project_id => 1, :id => nil})
+      test_volunteer = Volunteer.new({:title => 'Jane', :project_id => 1, :id => nil})
       expect(test_volunteer.title).to eq 'Jane'
     end
   end

@@ -48,7 +48,8 @@ end
 
 patch('/projects/:id') do
   @project = Project.find(params[:id].to_i())
-  @project.update(params[:title])
+  @project.update(:title => params[:title])
+  @projects = Project.all
   redirect to('/projects')
 end
 
@@ -68,7 +69,7 @@ post('/projects/:id/volunteers') do
   @project = Project.find(params[:id].to_i())
   @volunteer = Volunteer.new({:title => params[:title], :project_id => @project.id, :id => nil})
   @volunteer.save()
-  erb(:project)
+  erb(:projects)
 end
 
 
