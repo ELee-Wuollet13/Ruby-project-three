@@ -1,4 +1,4 @@
-# _Word Definer_
+# _Volunteer Tracker_
 
 #### _This program allows the user to enter and define projects_
 
@@ -21,7 +21,7 @@ _This app has been tested in Google Chrome_
 
 ## Known Bugs
 
-_At the time of submission, monday 01/20/2020, site cannot create new projects_
+_At the time of submission, Friday 01/24/2020, there are no known bugs_
 
 ## Support and contact details
 
